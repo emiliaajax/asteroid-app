@@ -20,20 +20,29 @@ const StarrySkyLayout = ({ children }: Props) => {
 
     if (!context) return
 
-    const canvas_width = (canvas.width = document.body.offsetWidth)
-    const canvas_height = (canvas.height = document.body.offsetHeight)
-
     function randomColor(): string {
       const arrColors = ['#ffffff', '#ffecd3', '#bfcfff']
-
       return arrColors[Math.floor(Math.random() * NUM_COLORS)]
     }
+
+    let canvasWidth: number = window.innerWidth
+    let canvasHeight: number = window.innerHeight
+
+    const resizeCanvas = () => {
+      canvasWidth = canvas.width = window.innerWidth
+      canvasHeight = canvas.height = window.innerHeight
+    }
+
+    // Initialize canvas size
+    resizeCanvas()
+
+    window.addEventListener('resize', resizeCanvas)
 
     const stars: Star[] = []
 
     for (let i = 0; i < NUM_STARS; i++) {
-      const randX = Math.floor(Math.random() * canvas_width) + 1
-      const randY = Math.floor(Math.random() * canvas_height) + 1
+      const randX = Math.floor(Math.random() * canvasWidth) + 1
+      const randY = Math.floor(Math.random() * canvasHeight) + 1
       const randR = Math.random() * 1.7 + 0.5
 
       const star = new Star({
@@ -58,7 +67,7 @@ const StarrySkyLayout = ({ children }: Props) => {
       update()
 
       if (context) {
-        context.clearRect(0, 0, canvas_width, canvas_height)
+        context.clearRect(0, 0, canvasWidth, canvasHeight)
 
         for (let i = 0; i < stars.length; i++) {
           stars[i].render(context)
@@ -75,6 +84,7 @@ const StarrySkyLayout = ({ children }: Props) => {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current) // Cancel animation frame when component unmounts
       }
+      window.removeEventListener('resize', resizeCanvas) // Remove resize listener
     }
   }, [])
 

@@ -7,7 +7,9 @@ import AsteroidAnalyzer from '../utils/AsteroidAnalyzer'
 
 const StatisticsBoard = () => {
   const dispatch: AppDispatch = useDispatch()
-  const { asteroidData } = useSelector((state: RootState) => state.asteroids)
+  const { asteroidData, isPending } = useSelector(
+    (state: RootState) => state.asteroids,
+  )
 
   const [potentiallyHazard, setPotentiallyHazard] = useState<boolean>(false)
   const [distanceFromEarth, setDistanceFromEarth] = useState<string>('')
@@ -17,7 +19,9 @@ const StatisticsBoard = () => {
   const [name, setName] = useState<string>('')
 
   useEffect(() => {
-    dispatch(getAsteroidsByDate({ startDate: '2021-01-15' }))
+    var todayDate = new Date().toISOString().slice(0, 10)
+
+    dispatch(getAsteroidsByDate({ startDate: todayDate, endDate: todayDate }))
   }, [])
 
   useEffect(() => {
@@ -58,27 +62,31 @@ const StatisticsBoard = () => {
 
   return (
     <>
-      <div className='flex flex-col space-y-5'>
-        <div className='flex space-x-5'>
-          <StatisticsCard header='Name' stats={name} />
-          <StatisticsCard
-            header='Distance from Earth (km)'
-            stats={distanceFromEarth}
-          />
-          <StatisticsCard header='Orbiting' stats={orbiting} />
+      {!isPending ? (
+        <div className='flex flex-col space-y-5'>
+          <div className='flex space-x-5'>
+            <StatisticsCard header='Name' stats={name} />
+            <StatisticsCard
+              header='Distance from Earth (km)'
+              stats={distanceFromEarth}
+            />
+            <StatisticsCard header='Orbiting' stats={orbiting} />
+          </div>
+          <div className='flex space-x-5'>
+            <StatisticsCard header='Diameter (m)' stats={estimatedDiameter} />
+            <StatisticsCard
+              header='Relative velocity (km/s)'
+              stats={relativeVelocity}
+            />
+            <StatisticsCard
+              header='Potentially hazard'
+              stats={potentiallyHazard ? 'Yes' : 'No'}
+            />
+          </div>
         </div>
-        <div className='flex space-x-5'>
-          <StatisticsCard header='Diameter (m)' stats={estimatedDiameter} />
-          <StatisticsCard
-            header='Relative velocity (km/s)'
-            stats={relativeVelocity}
-          />
-          <StatisticsCard
-            header='Potentially hazard'
-            stats={potentiallyHazard ? 'Yes' : 'No'}
-          />
-        </div>
-      </div>
+      ) : (
+        <div className='flex flex-col space-y-5'>Hola</div>
+      )}
     </>
   )
 }

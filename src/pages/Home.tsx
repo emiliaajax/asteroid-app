@@ -1,11 +1,11 @@
-import StatisticsCard from '../components/StatisticsCard'
+import StatisticsBoard from '../components/StatisticsBoard'
 
 const Home = () => {
   return (
     <>
-      <div className='flex h-full w-full'>
-        <StatisticsCard header='Hello' stats={12} />
-        <StatisticsCard header='Hello' stats={12} />
+      <div className='flex flex-col h-full w-full items-center justify-center'>
+        <div className='text-white'>Todays Asteroid Data</div>
+        <StatisticsBoard />
       </div>
     </>
   )

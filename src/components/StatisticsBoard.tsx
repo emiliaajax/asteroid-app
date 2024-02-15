@@ -9,14 +9,15 @@ const StatisticsBoard = () => {
   const dispatch: AppDispatch = useDispatch()
   const { asteroidData } = useSelector((state: RootState) => state.asteroids)
 
-  const [potentiallyHazard, setPotentiallyHazard] = useState<number | null>(
-    null,
-  )
+  const [potentiallyHazard, setPotentiallyHazard] = useState<boolean>(false)
+  const [distanceFromEarth, setDistanceFromEarth] = useState<string>('')
+  const [orbiting, setOrbiting] = useState<string>('')
+  const [estimatedDiameter, setEstimatedDiameter] = useState<string>('')
+  const [relativeVelocity, setRelativeVelocity] = useState<string>('')
+  const [name, setName] = useState<string>('')
 
   useEffect(() => {
-    dispatch(
-      getAsteroidsByDate({ startDate: '2024-02-15', endDate: '2024-02-17' }),
-    )
+    dispatch(getAsteroidsByDate({ startDate: '2021-01-15' }))
   }, [])
 
   useEffect(() => {
@@ -28,16 +29,56 @@ const StatisticsBoard = () => {
         )
         const analyzer = new AsteroidAnalyzer(asteroids)
 
-        setPotentiallyHazard(
-          analyzer.getNumberOfPotentiallyHazardousAsteroids(),
+        const closestAsteroid: any = analyzer.getClosestAsteroid()
+
+        console.log(closestAsteroid)
+
+        setPotentiallyHazard(closestAsteroid.is_potentially_hazardous_asteroid)
+        setDistanceFromEarth(
+          Math.round(
+            parseFloat(
+              closestAsteroid.close_approach_data[0].miss_distance.kilometers,
+            ),
+          ).toFixed(0),
         )
+        setOrbiting(closestAsteroid.close_approach_data[0].orbiting_body)
+        setEstimatedDiameter(
+          `${parseFloat(closestAsteroid.estimated_diameter.meters.estimated_diameter_min).toFixed(2)} - ${parseFloat(closestAsteroid.estimated_diameter.meters.estimated_diameter_max).toFixed(2)}`,
+        )
+        setRelativeVelocity(
+          parseFloat(
+            closestAsteroid.close_approach_data[0].relative_velocity
+              .kilometers_per_second,
+          ).toFixed(0),
+        )
+        setName(closestAsteroid.name)
       }
     }
   }, [asteroidData])
 
   return (
     <>
-      <StatisticsCard header='Potentially hazard' stats={potentiallyHazard} />
+      <div className='flex flex-col space-y-5'>
+        <div className='flex space-x-5'>
+          <StatisticsCard header='Name' stats={name} />
+          <StatisticsCard
+            header='Distance from Earth (km)'
+            stats={distanceFromEarth}
+          />
+          <StatisticsCard header='Orbiting' stats={orbiting} />
+        </div>
+        <div className='flex space-x-5'>
+          <StatisticsCard header='Diameter (m)' stats={estimatedDiameter} />
+          <StatisticsCard
+            header='Relative velocity (km/s)'
+            stats={relativeVelocity}
+          />
+          <StatisticsCard
+            header='Potentially hazard'
+            stats={potentiallyHazard ? 'Yes' : 'No'}
+          />
+        </div>
+      </div>
     </>
   )
 }

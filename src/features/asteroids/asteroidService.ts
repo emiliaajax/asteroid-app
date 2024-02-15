@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-const API_URL: string = 'https://api.nasa.gov/neo/rest/v1/'
-const API_KEY: string = import.meta.env.REACT_APP_API_KEY
+const API_URL: string = import.meta.env.VITE_ASTEROIDS_API
+const API_KEY: string = import.meta.env.VITE_API_KEY
 
 /**
  * Retrieves information about asteroids available for browsing.
@@ -12,6 +12,14 @@ const getAsteroids = async (): Promise<any> => {
   const response = await axios.get(API_URL + `/browse?api_key=${API_KEY}`)
 
   return response.data
+}
+
+type AsteroidData = {
+  element_count: number
+  links: Object
+  near_earth_objects: {
+    [date: string]: any[]
+  } | null
 }
 
 /**
@@ -25,14 +33,14 @@ const getAsteroids = async (): Promise<any> => {
 const getAsteroidsByDate = async (
   startDate: string,
   endDate?: string,
-): Promise<any> => {
+): Promise<AsteroidData> => {
   let url = API_URL + `feed?start_date=${startDate}`
 
   if (endDate) {
     url += `&end_date=${endDate}`
   }
 
-  const response = await axios.get(url + `api_key=${API_KEY}`)
+  const response = await axios.get(url + `&api_key=${API_KEY}`)
 
   return response.data
 }

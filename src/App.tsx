@@ -1,9 +1,12 @@
+import StarrySkyLayout from './components/StarrySkyLayout'
 import Home from './pages/Home'
 
 function App() {
   return (
     <>
-      <Home />
+      <StarrySkyLayout>
+        <Home />
+      </StarrySkyLayout>
     </>
   )
 }

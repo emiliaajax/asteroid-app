@@ -18,7 +18,7 @@ export default class Star {
     this.x = x // x-coordinate of the star
     this.y = y // y-coordinate of the star
     this.r = r // radius of the star
-    this.rChange = 0.015 // rate of change of radius
+    this.rChange = 0.01 // rate of change of radius
     this.color = color // color of the star
   }
 

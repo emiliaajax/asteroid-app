@@ -79,7 +79,7 @@ const StatisticsBoard = () => {
               stats={relativeVelocity}
             />
             <StatisticsCard
-              header='Potentially hazard'
+              header='Potentially hazardous'
               stats={potentiallyHazard ? 'Yes' : 'No'}
             />
           </div>

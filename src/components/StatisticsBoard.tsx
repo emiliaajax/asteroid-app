@@ -35,8 +35,6 @@ const StatisticsBoard = () => {
 
         const closestAsteroid: any = analyzer.getClosestAsteroid()
 
-        console.log(closestAsteroid)
-
         setPotentiallyHazard(closestAsteroid.is_potentially_hazardous_asteroid)
         setDistanceFromEarth(
           Math.round(

@@ -3,11 +3,13 @@ import StatisticsBoard from '../components/StatisticsBoard'
 const Home = () => {
   return (
     <>
-      <div className='flex flex-col h-full w-full items-center justify-center -m-10'>
-        <div className='text-white flex flex-col items-center'>
-          <p className='text-5xl'>Hello, I'm an Asteroid ☄️</p>
-          <p className='text-xl mt-3'>
-            Today is a great day, because I'm at my closest to Earth.
+      <div className='flex flex-col h-full overflow-scroll w-full items-center py-8 md:py-20 lg:py-20'>
+        <div className='text-white flex flex-col items-center pl-5 pr-5'>
+          <p className='text-3xl lg:text-5xl md:text-3xl'>
+            Hello, I'm an Asteroid ☄️
+          </p>
+          <p className='text-sm lg:text-3xl md:text-xl mt-3'>
+            Today is a great day, I'm at my closest to Earth.
             <br></br>
             If you are lucky, you might spot me 👋
             <br></br>
@@ -16,7 +18,7 @@ const Home = () => {
             Either way, here are some interesting facts about me:
           </p>
         </div>
-        <div className='pt-10'>
+        <div className='pt-5 md:pt-10 lg:pt-10'>
           <StatisticsBoard />
         </div>
       </div>

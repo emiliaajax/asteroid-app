@@ -3,6 +3,14 @@ import axios from 'axios'
 const API_URL: string = import.meta.env.VITE_ASTEROIDS_API
 const API_KEY: string = import.meta.env.VITE_API_KEY
 
+type AsteroidData = {
+  element_count: number
+  links: Object
+  near_earth_objects: {
+    [date: string]: any[]
+  } | null
+}
+
 /**
  * Retrieves information about asteroids available for browsing.
  *
@@ -14,14 +22,6 @@ const getAsteroids = async (): Promise<any> => {
   return response.data
 }
 
-type AsteroidData = {
-  element_count: number
-  links: Object
-  near_earth_objects: {
-    [date: string]: any[]
-  } | null
-}
-
 /**
  * Retrieves information about nearby asteroids within the specified date range. If only the start date is provided, the function defaults to fetching data for the subsequent 7 days.
  *
@@ -30,10 +30,7 @@ type AsteroidData = {
  *
  * @returns A promise that resolves with data about nearby asteroids within the specified date range.
  */
-const getAsteroidsByDate = async (
-  startDate: string,
-  endDate?: string,
-): Promise<AsteroidData> => {
+const getAsteroidsByDate = async (startDate: string, endDate?: string): Promise<AsteroidData> => {
   let url = API_URL + `feed?start_date=${startDate}`
 
   if (endDate) {

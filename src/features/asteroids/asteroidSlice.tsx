@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import asteroidService from './asteroidService.ts'
 
 type AsteroidState = {
@@ -71,16 +71,17 @@ export const asteroidSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(getAsteroidsByDate.fulfilled, (state, action) => {
+      .addCase(getAsteroidsByDate.fulfilled, (state: AsteroidState, action: PayloadAction<any>) => {
         state.isError = false
         state.isSuccess = true
         state.isPending = false
         state.asteroidData = action.payload
       })
-      .addCase(getAsteroidsByDate.rejected, state => {
+      .addCase(getAsteroidsByDate.rejected, (state: AsteroidState, action: PayloadAction<any>) => {
         state.isError = true
         state.isSuccess = false
         state.isPending = false
+        state.message = action.payload
         state.asteroidData = null
       })
       .addCase(getAsteroidsByDate.pending, state => {

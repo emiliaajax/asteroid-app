@@ -64,15 +64,13 @@ const StatisticsBoard = () => {
     <>
       {!isPending ? (
         <div className='flex flex-col space-y-5'>
-          <div className='flex space-x-5'>
+          <div className='grid grid-cols-1 sm:grid-cols-3 gap-5'>
             <StatisticsCard header='Name' stats={name} />
             <StatisticsCard
               header='Distance from Earth (km)'
               stats={distanceFromEarth}
             />
             <StatisticsCard header='Orbiting' stats={orbiting} />
-          </div>
-          <div className='flex space-x-5'>
             <StatisticsCard header='Diameter (m)' stats={estimatedDiameter} />
             <StatisticsCard
               header='Relative velocity (km/s)'

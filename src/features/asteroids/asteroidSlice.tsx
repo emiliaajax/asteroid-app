@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import asteroidService from './asteroidService.ts'
 
-interface AsteroidState {
+type AsteroidState = {
   isError: boolean
   isSuccess: boolean
   isPending: boolean
@@ -17,6 +17,11 @@ type AsteroidData = {
   } | null
 }
 
+type AsteroidDateRange = {
+  startDate: string
+  endDate?: string
+}
+
 export const initialState: AsteroidState = {
   isError: false,
   isSuccess: false,
@@ -25,11 +30,15 @@ export const initialState: AsteroidState = {
   asteroidData: null,
 }
 
-interface AsteroidDateRange {
-  startDate: string
-  endDate?: string
-}
-
+/**
+ * Retrieves asteroids within a specified date range asynchronously.
+ * 
+ * @param startDate - The start date of the range.
+ * @param endDate - The end date of the range.
+ * @param thunkAPI - The Redux Thunk API object.
+ * @returns A Promise that resolves to an array of Asteroid objects if successful,
+ * or rejects with an error message if unsuccessful.
+ */
 export const getAsteroidsByDate = createAsyncThunk(
   'asteroids',
   async ({ startDate, endDate }: AsteroidDateRange, thunkAPI) => {

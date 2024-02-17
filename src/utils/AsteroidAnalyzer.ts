@@ -1,16 +1,26 @@
+/**
+ * Represents an Asteroid Analyzer.
+ */
 export default class AsteroidAnalyzer {
+  /**
+   * The array of asteroids.
+   */
   private asteroids: any[]
 
+  /**
+   * Constructs a new AsteroidAnalyzer object.
+   * 
+   * @param asteroids - An array of asteroids.
+   */
   constructor(asteroids: any[]) {
     this.asteroids = asteroids
   }
 
-  getNumberOfPotentiallyHazardousAsteroids(): number {
-    return this.asteroids.filter(
-      asteroid => asteroid.is_potentially_hazardous_asteroid === true,
-    ).length
-  }
-
+  /**
+   * Finds the closest asteroid.
+   * 
+   * @returns The closest asteroid.
+   */
   getClosestAsteroid(): string {
     const asteroidsNotOrbitingEarth = this.asteroids.filter(
       asteroid => asteroid.close_approach_data[0].orbiting_body !== 'Earth',
@@ -23,6 +33,12 @@ export default class AsteroidAnalyzer {
     }
   }
 
+  /**
+   * Finds the closest asteroid among the given array.
+   * 
+   * @param asteroids - An array of asteroids.
+   * @returns The closest asteroid.
+   */
   private findClosest(asteroids: any[]) {
     return asteroids.reduce((closest, current) => {
       const closestDistance = parseFloat(

@@ -4,6 +4,7 @@ import { AppDispatch, RootState } from '../app/store'
 import { useEffect, useState } from 'react'
 import { getAsteroidsByDate } from '../features/asteroids/asteroidSlice'
 import AsteroidAnalyzer from '../utils/AsteroidAnalyzer'
+import CircularProgress from '@mui/material/CircularProgress'
 
 const StatisticsBoard = () => {
   const dispatch: AppDispatch = useDispatch()
@@ -81,7 +82,9 @@ const StatisticsBoard = () => {
           </div>
         </div>
       ) : (
-        <div className='flex flex-col space-y-5'>Hola</div>
+        <div className='text-white flex h-[18rem] justify-center items-center'>
+          <CircularProgress color='inherit' />
+        </div>
       )}
     </>
   )

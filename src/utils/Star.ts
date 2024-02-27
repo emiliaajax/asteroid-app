@@ -24,25 +24,10 @@ interface StarProps {
  * Represents a star object.
  */
 export default class Star {
-  /**
-   * The x-coordinate of the star.
-   */
   x: number
-  /**
-   * The y-coordinate of the star.
-   */
   y: number
-  /**
-   * The radius of the star.
-   */
   r: number
-  /**
-   * The rate of change of the radius.
-   */
   rChange: number
-  /**
-   * The color of the star.
-   */
   color: string
 
   /**
@@ -51,25 +36,10 @@ export default class Star {
    * @param props - The properties of the star.
    */
   constructor({ x, y, r, color }: StarProps) {
-    /**
-     * The x-coordinate of the star.
-     */
     this.x = x
-    /**
-     * The y-coordinate of the star.
-     */
     this.y = y
-    /**
-     * The radius of the star.
-     */
     this.r = r
-    /**
-     * The rate of change of the radius.
-     */
     this.rChange = 0.01
-    /**
-     * The color of the star.
-     */
     this.color = color
   }
 
